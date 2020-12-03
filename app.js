@@ -3,6 +3,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
+const _ = require("lodash");
 
 const posts = [];
 
@@ -14,46 +15,61 @@ const app = express();
 
 app.set('view engine', 'ejs');
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(express.static("public"));
 
-app.get("/", function(req,res){
+app.get("/", function(req, res) {
   res.render("home", {
     homeContent: homeStartingContent,
     postings: posts
   });
 });
 
-app.get("/about", function(req,res){
+app.get("/about", function(req, res) {
   res.render("about", {
     abContent: aboutContent
   });
 });
 
-app.get("/contact", function(req,res){
+app.get("/contact", function(req, res) {
   res.render("contact", {
     contContent: contactContent
   });
 });
 
-app.get("/compose", function(req,res){
-  res.render("compose", {
-  });
+app.get("/compose", function(req, res) {
+  res.render("compose", {});
 });
 
-app.post("/compose", function(req, res){
+app.post("/compose", function(req, res) {
 
   const post = {
     postTitle: req.body.newEntry,
     body: req.body.entryText
   }
 
-posts.push(post);
-res.redirect("/");
+  posts.push(post);
+  res.redirect("/");
 
 });
 
+app.get("/posts/:pages", function(req, res) {
+  let reqTitle = _.lowerCase(req.params.pages);
 
+  for (let i = 0; i < posts.length; i++) {
+    if (_.lowerCase(posts[i].postTitle) === reqTitle) {
+      console.log("Match Found");
+      res.render("post", {
+        directedTitle: reqTitle,
+        directedBody: posts[i].body
+      });
+    } else {
+      console.log("page not Found");
+    }
+  }
+});
 
 app.listen(4000, function() {
   console.log("Server started on port 4000");
