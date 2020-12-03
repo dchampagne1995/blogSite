@@ -1,0 +1,16 @@
+<% include partials/header %>
+
+<h1>Home</h1>
+<p> <%=homeContent%></p>
+
+<div class="box">
+  <% for(var i = 0; i<postings.length; i++){ %>
+  <div class="item">
+    <h1><%= postings[i].postTitle %></h1>
+    <p><%= postings[i].body %></p>
+
+  </div>
+
+  <%  }  %>
+
+<% include partials/footer %>
