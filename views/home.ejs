@@ -4,8 +4,10 @@
 <p> <%=homeContent.substring(0,100)+" ..."%> <a href=""> Read More</a> </p>
 
 <div class="box">
+  <!-- Traversing through post array and displaying all posts -->
   <% for(var i = 0; i<postings.length; i++){ %>
   <div class="item">
+    <!-- Displaying title and body -->
     <h1><%= postings[i].postTitle %></h1>
     <p><%= postings[i].body.substring(0,100) + " ... " %><a href="/posts/<%=postings[i].postTitle%>">Read More</a></p>
   </div>
