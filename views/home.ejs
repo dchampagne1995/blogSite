@@ -1,16 +1,14 @@
 <% include partials/header %>
 
 <h1>Home</h1>
-<p> <%=homeContent%></p>
+<p> <%=homeContent.substring(0,100)+" ..."%> <a href=""> Read More</a> </p>
 
 <div class="box">
   <% for(var i = 0; i<postings.length; i++){ %>
   <div class="item">
     <h1><%= postings[i].postTitle %></h1>
-    <p><%= postings[i].body %></p>
-
+    <p><%= postings[i].body.substring(0,100) + " ... " %><a href="/posts/<%=postings[i].postTitle%>">Read More</a></p>
   </div>
-
-  <%  }  %>
-
+  <%}%>
+</div>
   <% include partials/footer %>
